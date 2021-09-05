@@ -26,7 +26,7 @@ const SignInPage = props => {
   const [country, setCountry] = React.useState(null)
 
   const onValidatePhone = () => {
-    const result = validatePhone(phone);
+    const result = validatePhone(country.callingCode[0] + phone);
     setPhoneError(result);
   };
 
@@ -42,7 +42,7 @@ const SignInPage = props => {
   };
 
   const isValid = () => {
-    const phoneResult = validatePhone(phone);
+    const phoneResult = validatePhone(country.callingCode[0] + phone);
     setPhoneError(phoneResult);
     return !phoneResult;
   };

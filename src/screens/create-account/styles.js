@@ -1,7 +1,7 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import COLOR from '../../utils/color';
-import {FontFamily, normalizeFontSize, normalizeSize} from '../../utils/util';
-const {width} = Dimensions.get('window');
+import { FontFamily, normalizeFontSize, normalizeSize } from '../../utils/util';
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -12,6 +12,16 @@ const styles = StyleSheet.create({
     width: normalizeSize(125, 'width'),
     height: normalizeSize(128, 'width'),
     alignSelf: 'center',
+    marginTop: normalizeSize(12, 'height')
+  },
+  text: {
+    fontFamily: FontFamily.MilliardMedium,
+    color: COLOR.gray0,
+    fontSize: normalizeFontSize(16),
+    marginBottom: normalizeSize(10, 'height'),
+    alignSelf: "flex-start",
+    marginLeft: normalizeSize(width * 0.06, 'width'),
+    width: normalizeSize(width * 0.8, 'width'),
   },
   text1: {
     fontFamily: FontFamily.MilliardSemiBold,
