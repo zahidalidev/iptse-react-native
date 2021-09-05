@@ -6,7 +6,7 @@ import {
   GET_WEBINAR_INFO_SUCCESS,
   GET_WEBINAR_INFO_ERROR,
 } from '../../constants/ActionKeys';
-import {WebinarService, WebinarsService} from '../../services/WebinarsService';
+import { WebinarService, WebinarsService } from '../../services/WebinarsService';
 
 export const GetAllWebinarsRequestAsync = data => {
   return dispatch => {
@@ -30,6 +30,7 @@ export const GetAllWebinarsSuccess = data => {
 };
 
 export const GetAllWebinarsError = data => {
+  alert("error ", GET_ALL_WEBINARS_ERROR)
   return {
     type: GET_ALL_WEBINARS_ERROR,
     payload: data,

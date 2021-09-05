@@ -3,7 +3,7 @@ import {
   VERIFY_MOBILE_SUCCESS,
   VERIFY_MOBILE_ERROR,
 } from '../../constants/ActionKeys';
-import {VerifyMobileService} from '../../services/VerifyMobileService';
+import { VerifyMobileService } from '../../services/VerifyMobileService';
 
 export const VerifyMobileRequestAsync = data => {
   return dispatch => {
@@ -27,6 +27,8 @@ export const VerifyMobileSuccess = data => {
 };
 
 export const VerifyMobileError = data => {
+  alert("error ", VERIFY_MOBILE_ERROR)
+
   return {
     type: VERIFY_MOBILE_ERROR,
     payload: data,

@@ -3,7 +3,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_ERROR,
 } from '../../constants/ActionKeys';
-import {SignUpService} from '../../services/SignUpService';
+import { SignUpService } from '../../services/SignUpService';
 
 export const SignUpRequestAsync = data => {
   return dispatch => {
@@ -27,6 +27,7 @@ export const SignUpSuccess = data => {
 };
 
 export const SignUpError = data => {
+  alert("Error ", SIGNUP_ERROR)
   return {
     type: SIGNUP_ERROR,
     payload: data,

@@ -22,8 +22,8 @@ import { REGISTER_ROUTE } from '../../navigation/nav-keys';
 const SignInPage = props => {
   const [phone, setPhone] = React.useState("");
   const [phoneError, setPhoneError] = React.useState(null);
-  const [countryCode, setCountryCode] = React.useState('FR')
-  const [country, setCountry] = React.useState(null)
+  const [countryCode, setCountryCode] = React.useState('IN')
+  const [country, setCountry] = React.useState({ callingCode: ["+91"] })
 
   const onValidatePhone = () => {
     const result = validatePhone(country.callingCode[0] + phone);

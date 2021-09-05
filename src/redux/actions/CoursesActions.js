@@ -6,7 +6,7 @@ import {
   GET_COURSE_INFO_SUCCESS,
   GET_COURSE_INFO_ERROR,
 } from '../../constants/ActionKeys';
-import {CourseService, CoursesService} from '../../services/CoursesService';
+import { CourseService, CoursesService } from '../../services/CoursesService';
 
 export const GetAllCoursesRequestAsync = data => {
   return dispatch => {
@@ -30,6 +30,7 @@ export const GetAllCoursesSuccess = data => {
 };
 
 export const GetAllCoursesError = data => {
+  alert("error ", GET_ALL_COURSES_ERROR)
   return {
     type: GET_ALL_COURSES_ERROR,
     payload: data,

@@ -4,7 +4,7 @@ import {
   SIGNIN_ERROR,
   SET_SIGNIN,
 } from '../../constants/ActionKeys';
-import {LoginService} from '../../services/SignInService';
+import { LoginService } from '../../services/SignInService';
 
 export const SignInRequestAsync = data => {
   return dispatch => {
@@ -28,6 +28,7 @@ export const SignInSuccess = data => {
 };
 
 export const SignInError = data => {
+  alert(SignInError)
   return {
     type: SIGNIN_ERROR,
     payload: data,

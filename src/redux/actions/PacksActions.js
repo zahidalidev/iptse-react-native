@@ -33,6 +33,7 @@ export const GetAllPacksSuccess = data => {
 };
 
 export const GetAllPacksError = data => {
+  alert("error ", GET_PACKS_ERROR)
   return {
     type: GET_PACKS_ERROR,
     payload: data,

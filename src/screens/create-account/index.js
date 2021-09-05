@@ -8,10 +8,13 @@ import {
   ScrollView,
   StatusBar,
   Dimensions,
+  TouchableOpacity,
+  Linking,
 } from 'react-native';
 import styles from './styles';
 import APP_CONSTANT from '../../constants/AppConstants';
 import { Button, Input, Loader, RadioButton } from '../../common';
+import LoadingModal from "../../common/LoadingModal"
 import {
   Log,
   normalizeSize,
@@ -47,7 +50,9 @@ const CreateAccountPage = props => {
   const [organisationError, setOrganisationError] = React.useState(null);
   const [countryCode, setCountryCode] = React.useState('IN')
   const [sourceInfoText, setSourceInfoText] = React.useState('')
-  const [country, setCountry] = React.useState({ callingCode: "+91" })
+  const [institute, setinstitute] = React.useState('')
+  const [country, setCountry] = React.useState({ callingCode: ["+91"] })
+  const [indicator, showIndicator] = React.useState(false)
 
   const [registeredForExam, setRegisteredForExam] = React.useState('')
   const [infoAboutIPTSE, setInfoAboutIPTSE] = React.useState('')
@@ -129,31 +134,40 @@ const CreateAccountPage = props => {
   };
 
   const onSignUpClickListener = () => {
-    if (isValid()) {
-      Log('[CreateAccount]- student Type-', studentType);
-      Log('[CreateAccount]- name-', name);
-      Log('[CreateAccount]- email-', email);
-      Log('[CreateAccount]- phone-', country.callingCode[0] + phone);
-      Log('[CreateAccount]- organisation-', organisation);
+    try {
+      if (isValid()) {
 
-      let uniId = allUniversitiesDetail.filter((item) => item.name === selectedUniversity);
+        showIndicator(true)
 
-      const data = {
-        email: email,
-        name: name,
-        phone: country.callingCode[0] + phone,
-        type: studentType,
-        registerFor: 'EXAM',
-        registeredForExam: registeredForExam,
-        sourceOfInformation: sourceInfoText === "Any Other..." ? sourceInfoText : sourceInfoText,
-        universityId: uniId[0].id ? uniId[0].id : null,
-        universityName: selectedUniversity,
-      };
+        Log('[CreateAccount]- student Type-', studentType);
+        Log('[CreateAccount]- name-', name);
+        Log('[CreateAccount]- email-', email);
+        Log('[CreateAccount]- phone-', country.callingCode[0] + phone);
+        Log('[CreateAccount]- organisation-', organisation);
 
-      notifyMessage(JSON.stringify(data));
-      Log('[CreateAccount]- data-', JSON.stringify(data));
-      dispatch(SignUpActions.SignUpRequestAsync(data));
+        let uniId = allUniversitiesDetail.filter((item) => item.name === selectedUniversity);
+
+        const data = {
+          email: email,
+          name: name,
+          phone: country.callingCode[0] + phone,
+          type: studentType,
+          registerFor: 'EXAM',
+          registeredForExam: registeredForExam,
+          sourceOfInformation: sourceInfoText === "Any Other..." ? sourceInfoText : (sourceInfoText === "Your institute" ? institute : sourceInfoText),
+          universityId: uniId[0].id ? uniId[0].id : null,
+          universityName: selectedUniversity,
+        };
+
+        notifyMessage(JSON.stringify(data));
+        Log('[CreateAccount]- data-', JSON.stringify(data));
+        dispatch(SignUpActions.SignUpRequestAsync(data));
+      }
+    } catch (error) {
+      showIndicator(false)
+      alert("Registration Error", error)
     }
+    showIndicator(false)
   };
 
   const onSignInPressClickListener = () => {
@@ -227,11 +241,13 @@ const CreateAccountPage = props => {
     <>
       <StatusBar backgroundColor="white" />
       <ScrollView style={{ backgroundColor: "white" }} showsVerticalScrollIndicator={false}>
+        <LoadingModal show={indicator} />
         <Loader loading={requesting} />
         <KeyboardAvoidingView
           style={styles.container}
-          behavior="padding"
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}>
+        // behavior="padding"
+        // keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
+        >
           <Image
             source={require('../../../assets/logo.png')}
             style={styles.image}
@@ -300,6 +316,16 @@ const CreateAccountPage = props => {
               /> : null
           }
           {
+            studentType === "Faculty/Working Professional/Startup" ?
+              <Input
+                label={APP_CONSTANT.organisationNameText}
+                placeholder="Organisation"
+                value={organisation}
+                error={organisationError}
+                onChangeText={onChangeOrganisation}
+              /> : null
+          }
+          {
             studentType === "COLLEGE_STUDENT" ?
               <>
                 <Text style={styles.text}>University</Text>
@@ -349,17 +375,29 @@ const CreateAccountPage = props => {
               /> : null
           }
 
+          {
+            infoAboutIPTSE === "Your institute" ?
+              <Input
+                label={"Source of Information"}
+                placeholder="Source of Information"
+                value={institute}
+                onChangeText={setinstitute}
+              /> : null
+          }
+
           <Button
             label={APP_CONSTANT.signUpText}
             onPress={onSignUpClickListener}
           />
-          <Text style={[styles.text2, styles.mt, { marginBottom: normalizeSize(10, 'height') }]}>
+          <Text style={[styles.text2, styles.mt]}>
             {APP_CONSTANT.alredyHaveAnAccountText}
             <Text style={styles.text3} onPress={onSignInPressClickListener}>
               {APP_CONSTANT.signInText}
             </Text>
           </Text>
-
+          <TouchableOpacity onPress={() => Linking.openURL("https://e-learning.iptse.com/signup")} >
+            <Text style={[styles.text3, styles.mt, { marginBottom: normalizeSize(20, 'height'), borderBottomWidth: 1, borderColor: COLOR.darkGreen }]}>Terms and Conditions</Text>
+          </TouchableOpacity>
         </KeyboardAvoidingView>
       </ScrollView>
     </>
