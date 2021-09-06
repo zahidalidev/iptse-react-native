@@ -133,41 +133,48 @@ const CreateAccountPage = props => {
     setOrganisationError(result);
   };
 
-  const onSignUpClickListener = () => {
+  const onSignUpClickListener = async () => {
     try {
-      if (isValid()) {
+      // if (isValid()) {
 
-        showIndicator(true)
+      showIndicator(true)
 
-        Log('[CreateAccount]- student Type-', studentType);
-        Log('[CreateAccount]- name-', name);
-        Log('[CreateAccount]- email-', email);
-        Log('[CreateAccount]- phone-', country.callingCode[0] + phone);
-        Log('[CreateAccount]- organisation-', organisation);
+      Log('[CreateAccount]- student Type-', studentType);
+      Log('[CreateAccount]- name-', name);
+      Log('[CreateAccount]- email-', email);
+      Log('[CreateAccount]- phone-', country.callingCode[0] + phone);
+      Log('[CreateAccount]- organisation-', organisation);
 
-        let uniId = allUniversitiesDetail.filter((item) => item.name === selectedUniversity);
-
-        const data = {
-          email: email,
-          name: name,
-          phone: country.callingCode[0] + phone,
-          type: studentType,
-          registerFor: 'EXAM',
-          registeredForExam: registeredForExam,
-          sourceOfInformation: sourceInfoText === "Any Other..." ? sourceInfoText : (sourceInfoText === "Your institute" ? institute : sourceInfoText),
-          universityId: uniId[0].id ? uniId[0].id : null,
-          universityName: selectedUniversity,
-        };
-
-        notifyMessage(JSON.stringify(data));
-        Log('[CreateAccount]- data-', JSON.stringify(data));
-        dispatch(SignUpActions.SignUpRequestAsync(data));
+      let uniId = [{ id: null }]
+      if (selectedUniversity) {
+        uniId = allUniversitiesDetail.filter((item) => item.name === selectedUniversity);
       }
+      // "+917703101794"
+      const data = {
+        email: email,
+        name: name,
+        phone: country.callingCode[0] + phone,
+        type: studentType,
+        registerFor: 'EXAM',
+        registeredForExam: registeredForExam,
+        sourceOfInformation: sourceInfoText === "Any Other..." ? sourceInfoText : (sourceInfoText === "Your institute" ? institute : sourceInfoText),
+        universityId: uniId[0].id ? uniId[0].id : null,
+        universityName: selectedUniversity,
+      };
+
+      let { data: res } = await axios.post("https://iptseapi.kilobyte.live/v1/Member", data)
+      notifyMessage(JSON.stringify(res));
+      Log('[CreateAccount]- data-', JSON.stringify(res));
+      alert("Registration Successful")
+      // }
     } catch (error) {
       showIndicator(false)
       alert("Registration Error", error)
+      console.log("Registration Error: ", error)
     }
     showIndicator(false)
+    // props.navigation.navigate("VERIFY_MOBILE_ROUTE")
+
   };
 
   const onSignInPressClickListener = () => {

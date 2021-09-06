@@ -35,8 +35,7 @@ const Navigation = props => {
       {isLoggedIn || hasToken ? (
         <AuthStackNavigator />
       ) : (
-        <AuthStackNavigator />
-        // <NoAuthStackNavigator />
+        <NoAuthStackNavigator />
       )}
     </NavigationContainer>
   );

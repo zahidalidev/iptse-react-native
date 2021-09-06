@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import CreateAccountPage from '../screens/create-account';
 import ForgotPasswordPage from '../screens/forgot-password';
 import SignInPage from '../screens/login';
@@ -19,14 +19,14 @@ const NoAuthStackNavigator = props => {
   return (
     <Stack.Navigator
       initialRouteName={REGISTER_ROUTE}
-      screenOptions={({route, navigation}) => ({
+      screenOptions={({ route, navigation }) => ({
         // headerLeft: () => <Text>Back</Text>,
         header: () => null,
       })}>
       <Stack.Screen
         name={REGISTER_ROUTE}
         component={CreateAccountPage}
-        // options={{header: null}}
+      // options={{header: null}}
       />
       <Stack.Screen name={LOGIN_ROUTE} component={SignInPage} />
       <Stack.Screen name={VERIFY_MOBILE_ROUTE} component={VerifyMobilePage} />

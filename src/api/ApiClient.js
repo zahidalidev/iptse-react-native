@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Logger from '../utils/logger';
-import {getToken, notifyMessage} from '../utils/util';
+import { getToken, notifyMessage } from '../utils/util';
 export default class ApiClient {
   static BASE_URL = 'http://iptseapi.kilobyte.live/v1';
 
@@ -46,7 +46,7 @@ export default class ApiClient {
       // headers['Authorization'] = 'Bearer ' + token2;
       headers['Authorization'] = token2;
     }
-    let axiosInstance = axios.create({baseURL: this.BASE_URL});
+    let axiosInstance = axios.post({ baseURL: this.BASE_URL });
     Logger.log('Web Service Url:', `${this.BASE_URL}${url}`);
     Logger.log('Web Service Method:', method);
     Logger.log('Web Service payload:', JSON.stringify(payload));
@@ -61,6 +61,11 @@ export default class ApiClient {
         params: requestParams,
         headers: headers,
       });
+
+
+      console.log("response: ", response)
+
+
       notifyMessage(JSON.stringify(response));
       Logger.log('Web Service Response:', JSON.stringify(response));
       if (response.status === 200) {

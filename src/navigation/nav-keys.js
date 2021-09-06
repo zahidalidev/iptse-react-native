@@ -15,3 +15,5 @@ export const HOME_ROUTE = 'HOME_ROUTE';
 export const PROFILE_ROUTE = 'PROFILE_ROUTE';
 export const PROFILE_EDIT_ROUTE = 'PROFILE_EDIT_ROUTE';
 export const TABS_ROUTE = 'TABS_ROUTE';
+export const VARIFY_MOBILE = 'VARIFY_MOBILE';
+
